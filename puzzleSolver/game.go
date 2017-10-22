@@ -14,9 +14,9 @@ func main() {
 
 	start := board{startA, startB, startC, startAgent}
 
-	solutionA := point{0, 0}
-	solutionB := point{1, 0}
-	solutionC := point{3, 2}
+	solutionA := point{1, 2}
+	solutionB := point{1, 1}
+	solutionC := point{1, 0}
 	solutionAgent := point{3, 0}
 
 	solution := board{solutionA, solutionB, solutionC, solutionAgent}
