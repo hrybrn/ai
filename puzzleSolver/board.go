@@ -69,6 +69,8 @@ func (b board) moves() *list.List {
 func (b board) printParents() {
 	current := &b
 
+	fullOutput := list.New()
+
 	for current != nil {
 		output := [4][4]string{
 			{" ", " ", " ", " "},
@@ -85,13 +87,19 @@ func (b board) printParents() {
 
 		for i := 0; i < 4; i++ {
 			for j := 0; j < 4; j++ {
-				stringOutput += output[j][3 - i] + " "
+				stringOutput += output[j][3-i] + " "
 			}
 
 			stringOutput += "\n"
 		}
 
-		fmt.Println(stringOutput)
+		fullOutput.PushBack(stringOutput)
 		current = current.parent
 	}
+
+	for fullOutput.Len() > 0 {
+		orderedOut := fullOutput.Remove(fullOutput.Back())
+		fmt.Println(orderedOut)
+	}
+
 }
