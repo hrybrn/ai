@@ -1,6 +1,10 @@
 package main
 
-import "container/list"
+import (
+	"container/list"
+	"fmt"
+	"math"
+)
 
 type point struct {
 	x, y int
@@ -14,15 +18,24 @@ func (p point) valid() bool {
 	return p.x >= 0 && p.y >= 0 && p.x <= 3 && p.y <= 3
 }
 
+func (p point) manhattanDistance(other point) float64 {
+	return math.Abs(float64(p.x-other.x)) + math.Abs(float64(p.y-other.y))
+}
+
 type board struct {
 	a, b, c, agent point
+	parent         *board
 }
 
 func (b board) equals(other board) bool {
 	return b.a.equals(other.a) && b.b.equals(other.b) && b.c.equals(other.c) && b.agent.equals(other.agent)
 }
 
-func (b board) moves() *list.List {
+func (b board) manhattanDistance(other board) float64 {
+	return b.a.manhattanDistance(other.a) + b.b.manhattanDistance(other.b) + b.c.manhattanDistance(other.c) + b.agent.manhattanDistance(other.agent)
+}
+
+func (b *board) moves() *list.List {
 	moves := list.New()
 
 	points := make([]point, 4)
@@ -46,9 +59,29 @@ func (b board) moves() *list.List {
 				pointc = b.agent
 			}
 
-			moves.PushFront(board{pointa, pointb, pointc, agent})
+			moves.PushFront(board{pointa, pointb, pointc, agent, b})
 		}
 	}
 
 	return moves
+}
+
+func (b *board) printParents() {
+	current := b
+
+	for b != nil {
+		output := [4][4]string{
+			{" ", " ", " ", " "},
+			{" ", " ", " ", " "},
+			{" ", " ", " ", " "},
+			{" ", " ", " ", " "}}
+
+		output[current.a.x][current.a.y] = "a"
+		output[current.b.x][current.b.y] = "b"
+		output[current.c.x][current.c.y] = "c"
+		output[current.agent.x][current.agent.y] = "d"
+
+		fmt.Println(output)
+		current = b.parent
+	}
 }

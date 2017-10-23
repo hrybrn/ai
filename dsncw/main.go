@@ -1,8 +1,9 @@
 package main
 
 import (
-	"os/exec"
 	"fmt"
+	"os/exec"
+	"strings"
 )
 
 func main() {
@@ -33,8 +34,17 @@ func main() {
 		"iinet.net.au"}
 
 	for i := 0; i < len(websites); i++ {
-		cmd := exec.Command("echo", "hi");
-		output, err := cmd.Output();
-		fmt.Println(output);
+		cmd := exec.Command("ping", "-c", "10", websites[i])
+		output, err := cmd.Output()
+		out := string(output[:])
+		if err == nil {
+			split := strings.Split(out, "\n")
+
+			last := split[len(split)-2]
+
+			stats := strings.Split(strings.Split(last, "=")[1], " ")
+			fmt.Println(stats)
+
+		}
 	}
 }

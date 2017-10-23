@@ -3,7 +3,8 @@ package main
 import (
 	"container/list"
 	"fmt"
-	"math/rand"
+
+	shuffle "github.com/shogo82148/go-shuffle"
 )
 
 func main() {
@@ -12,17 +13,17 @@ func main() {
 	startC := point{2, 0}
 	startAgent := point{3, 0}
 
-	start := board{startA, startB, startC, startAgent}
+	start := board{startA, startB, startC, startAgent, nil}
 
 	solutionA := point{1, 2}
 	solutionB := point{1, 1}
 	solutionC := point{1, 0}
 	solutionAgent := point{3, 0}
 
-	solution := board{solutionA, solutionB, solutionC, solutionAgent}
+	solution := board{solutionA, solutionB, solutionC, solutionAgent, nil}
 
-	//breadthFirst(start, solution)
-	depthFirst(start, solution)
+	breadthFirst(start, solution)
+	//depthFirst(start, solution)
 }
 
 func breadthFirst(start, solution board) {
@@ -70,10 +71,10 @@ func depthFirst(start, solution board) {
 
 		moves := current.moves()
 
-		shuffleList(moves)
+		*moves = shuffleList(moves)
 
 		for i := 0; moves.Len() > 0; i++ {
-			next := moves.Remove(moves.Front()).(board)
+			next := moves.Remove(moves.Front())
 			fringe.PushFront(next)
 			//fmt.Println(count, next.agent.x, next.agent.y)
 		}
@@ -86,24 +87,25 @@ func depthFirst(start, solution board) {
 	}
 
 	fmt.Println(count)
-	fmt.Println(current.a.x, current.a.y)
-	fmt.Println(current.b.x, current.b.y)
-	fmt.Println(current.c.x, current.c.y)
-	fmt.Println(current.agent.x, current.agent.y)
+	current.printParents()
 }
 
-func shuffleList(input *list.List) {
-	intermediate := list.New()
+func shuffleList(input *list.List) list.List {
+	size := input.Len()
+	intermediate := make([]board, size)
 
-	rand := rand.Intn(input.Len())
-
-	for i := 0; i < rand; i++ {
-		current := input.Remove(input.Front())
-		intermediate.PushBack(current)
+	for i := 0; i < size; i++ {
+		current := input.Front()
+		input.Remove(current)
+		intermediate[i] = current.Value.(board)
 	}
 
-	for intermediate.Len() > 0 {
-		current := intermediate.Remove(intermediate.Front())
-		input.PushFront(current)
+	slice := intermediate[0:len(intermediate)]
+	shuffle.Slice(slice)
+
+	for i := 0; i < size; i++ {
+		input.PushFront(slice[i])
 	}
+
+	return *input
 }
