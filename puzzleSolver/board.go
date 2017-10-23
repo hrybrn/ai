@@ -35,7 +35,7 @@ func (b board) manhattanDistance(other board) float64 {
 	return b.a.manhattanDistance(other.a) + b.b.manhattanDistance(other.b) + b.c.manhattanDistance(other.c) + b.agent.manhattanDistance(other.agent)
 }
 
-func (b *board) moves() *list.List {
+func (b board) moves() *list.List {
 	moves := list.New()
 
 	points := make([]point, 4)
@@ -59,15 +59,15 @@ func (b *board) moves() *list.List {
 				pointc = b.agent
 			}
 
-			moves.PushFront(board{pointa, pointb, pointc, agent, b})
+			moves.PushFront(board{pointa, pointb, pointc, agent, &b})
 		}
 	}
 
 	return moves
 }
 
-func (b *board) printParents() {
-	current := b
+func (b board) printParents() {
+	current := &b
 
 	for current != nil {
 		output := [4][4]string{
