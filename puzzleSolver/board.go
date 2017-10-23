@@ -32,7 +32,7 @@ func (b board) equals(other board) bool {
 }
 
 func (b board) manhattanDistance(other board) float64 {
-	return b.a.manhattanDistance(other.a) + b.b.manhattanDistance(other.b) + b.c.manhattanDistance(other.c) + b.agent.manhattanDistance(other.agent)
+	return b.a.manhattanDistance(other.a) + b.b.manhattanDistance(other.b) + b.c.manhattanDistance(other.c) //+ b.agent.manhattanDistance(other.agent)
 }
 
 func (b board) moves() *list.List {
