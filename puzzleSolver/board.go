@@ -69,7 +69,7 @@ func (b *board) moves() *list.List {
 func (b *board) printParents() {
 	current := b
 
-	for b != nil {
+	for current != nil {
 		output := [4][4]string{
 			{" ", " ", " ", " "},
 			{" ", " ", " ", " "},
@@ -81,7 +81,17 @@ func (b *board) printParents() {
 		output[current.c.x][current.c.y] = "c"
 		output[current.agent.x][current.agent.y] = "d"
 
-		fmt.Println(output)
+		stringOutput := ""
+
+		for i := 0; i < 4; i++ {
+			for j := 0; j < 4; j++ {
+				stringOutput += output[j][3 - i] + " "
+			}
+
+			stringOutput += "\n"
+		}
+
+		fmt.Println(stringOutput)
 		current = b.parent
 	}
 }
