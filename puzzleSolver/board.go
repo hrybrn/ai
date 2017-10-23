@@ -92,6 +92,6 @@ func (b *board) printParents() {
 		}
 
 		fmt.Println(stringOutput)
-		current = b.parent
+		current = current.parent
 	}
 }
