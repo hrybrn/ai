@@ -52,10 +52,7 @@ func breadthFirst(start, solution board) {
 	}
 
 	fmt.Println(count)
-	fmt.Println(current.a.x, current.a.y)
-	fmt.Println(current.b.x, current.b.y)
-	fmt.Println(current.c.x, current.c.y)
-	fmt.Println(current.agent.x, current.agent.y)
+	current.printParents()
 }
 
 func depthFirst(start, solution board) {
