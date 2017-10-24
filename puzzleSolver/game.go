@@ -15,7 +15,7 @@ func main() {
 
 	solution := board{solutionA, solutionB, solutionC, solutionAgent, nil}
 
-	//breadthFirst(start, solution)
+	breadthFirst(start, solution)
 	//depthFirst(start, solution)
-	astar(start, solution)
+	//astar(start, solution)
 }
