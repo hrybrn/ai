@@ -16,6 +16,7 @@ func main() {
 	solution := board{solutionA, solutionB, solutionC, solutionAgent, nil}
 
 	//breadthFirst(start, solution)
-	depthFirst(start, solution)
+	concurrentBreadthFirst(start, solution)
+	//depthFirst(start, solution)
 	//astar(start, solution)
 }

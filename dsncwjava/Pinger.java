@@ -35,10 +35,9 @@ public class Pinger {
 
         System.out.println(headings);
 
-        int i = 0;
-        //for(int i = 0; i < websites.length; i++){
+        for(int i = 0; i < websites.length; i++){
             try{
-                Process pr = rt.exec("ping -4 -c 10 " + websites[i]);
+                Process pr = rt.exec("ping4 -c 10 " + websites[i]);
                 InputStream err = pr.getErrorStream();
                 InputStream is = pr.getInputStream();
                 String output = convertStreamToString(is);
@@ -48,7 +47,9 @@ public class Pinger {
                 
                     String[] lines = output.split("\n");
                     String[] stats = lines[lines.length - 1].split("=")[1].split("/");
-                    String ip = lines[1].split("(")[1].split(")")[0];
+                    
+                    String ip = lines[2].split("\\(")[1].split("\\)")[0];
+
 
                     for(int j = 0; j < stats.length; j++){
                         stats[j] = stats[j].trim().replace("ms", "");
@@ -61,7 +62,7 @@ public class Pinger {
                     System.out.print(websites[i] + ",err,err,err,err,");
                 }
 
-                Process pr6 = rt.exec("ping -4 -c 10 " + websites[i]);
+                Process pr6 = rt.exec("ping6 -c 10 " + websites[i]);
                 InputStream err6 = pr6.getErrorStream();
                 InputStream is6 = pr6.getInputStream();
                 String output6 = convertStreamToString(is6);
@@ -71,7 +72,7 @@ public class Pinger {
                 
                     String[] lines = output6.split("\n");
                     String[] stats = lines[lines.length - 1].split("=")[1].split("/");
-                    String ip = lines[1].split("(")[1].split(")")[0];
+                    String ip = lines[1].split("\\(")[1].split("\\)")[0];
                     
                     for(int j = 0; j < stats.length; j++){
                         stats[j] = stats[j].trim().replace("ms", "");
@@ -81,12 +82,12 @@ public class Pinger {
                     System.out.println(ip + "," + stats[1] + "," + stats[0] + "," + stats[2] + ",");
                 } else {
                     //print errors in place if it fails
-                    System.out.println(websites[i] + ",err,err,err,err,");
+                    System.out.println("err,err,err,err");
                 }
             } catch(Exception e){
                 e.printStackTrace();
             }
-        //}
+        }
     }
 
     static String convertStreamToString(InputStream is) {
