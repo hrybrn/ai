@@ -5,8 +5,8 @@ class NumericalDerivative {
 
         for(int i = 0; i < 20; i++){
             double h = Math.pow(10, -i);
-
-            System.out.println(h + "\t" + g(x, h));
+            
+            System.out.println(h + "\t" + (1 / g(x, h)));
         }
     }
 
@@ -15,6 +15,6 @@ class NumericalDerivative {
     }
 
     public static double g(double x, double h){
-        return h / (f(x + h) / f(x));
+        return (f(x+h) - f(x)) / h;
     }
 }
