@@ -4,6 +4,7 @@ import (
 	"container/list"
 	"fmt"
 	"math"
+	"strconv"
 )
 
 type point struct {
@@ -32,7 +33,7 @@ func (b board) equals(other board) bool {
 }
 
 func (b board) manhattanDistance(other board) float64 {
-	return b.a.manhattanDistance(other.a) + b.b.manhattanDistance(other.b) + b.c.manhattanDistance(other.c) //+ b.agent.manhattanDistance(other.agent)
+	return b.a.manhattanDistance(other.a) + b.b.manhattanDistance(other.b) + b.c.manhattanDistance(other.c) + b.agent.manhattanDistance(other.agent)
 }
 
 func (b board) moves() *list.List {
@@ -71,6 +72,8 @@ func (b board) printParents() {
 
 	fullOutput := list.New()
 
+	count := 0
+
 	for current != nil {
 		output := [4][4]string{
 			{" ", " ", " ", " "},
@@ -99,7 +102,22 @@ func (b board) printParents() {
 
 	for fullOutput.Len() > 0 {
 		orderedOut := fullOutput.Remove(fullOutput.Back())
+		fmt.Println("move " + strconv.Itoa(count) + "\n")
+		count++
 		fmt.Println(orderedOut)
 	}
 
+}
+
+func (b board) numberParents() float64 {
+	current := &b
+
+	count := 0.0
+
+	for current != nil {
+		count++
+		current = current.parent
+	}
+
+	return count
 }

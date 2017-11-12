@@ -4,40 +4,7 @@ import (
 	"container/list"
 	"fmt"
 	"runtime"
-	"sync"
 )
-
-func search(fringe *list.List, solution board, mutex *sync.Mutex) {
-	mutex.Lock()
-	current := fringe.Remove(fringe.Front()).(board)
-	mutex.Unlock()
-
-	for !current.equals(solution) {
-		moves := current.moves()
-
-		for i := 0; moves.Len() > 0; i++ {
-			next := moves.Remove(moves.Front()).(board)
-
-			fringe.PushBack(next)
-		}
-
-		mutex.Lock()
-		current = fringe.Remove(fringe.Front()).(board)
-		mutex.Unlock()
-	}
-	current.printParents()
-}
-
-func concurrentBreadthFirst(start, solution board) {
-	fringe := list.New()
-	fringe.PushFront(start)
-
-	lock := &sync.Mutex{}
-
-	for i := 0; i < 1; i++ {
-		go search(fringe, solution, lock)
-	}
-}
 
 func breadthFirst(start, solution board) {
 	fringe := list.New()

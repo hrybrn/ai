@@ -1,7 +1,7 @@
 class NewtonRaphson {
     public static void main(String[] args){
         double current = 1;
-        int i = 1;
+        int i = 0;
         while(Math.abs(current) > 0.01){
             System.out.println(i++ + "\t" + current);
 
@@ -12,7 +12,8 @@ class NewtonRaphson {
     }
 
     public static double f(double x){
-        return Math.pow(x, 4);
+        //x^3
+        return Math.pow(x, 3);
     }
 
     public static double fdash(double x){

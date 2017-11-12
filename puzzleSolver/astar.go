@@ -17,13 +17,16 @@ func astar(start, solution board) {
 
 	if err == nil {
 		for !current.equals(solution) {
+
 			moves := current.moves()
 
 			for i := 0; moves.Len() > 0; i++ {
 				next := moves.Remove(moves.Front()).(board)
 
 				md := next.manhattanDistance(solution)
-				fringe.Insert(next, md)
+				numParents := next.numberParents()
+
+				fringe.Insert(next, md+numParents)
 			}
 
 			inter, err := fringe.Pop()
