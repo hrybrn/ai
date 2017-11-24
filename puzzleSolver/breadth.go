@@ -25,10 +25,6 @@ func breadthFirst(start, solution board) int {
 			fringe.PushBack(next)
 		}
 
-		if count%1000000 == 0 {
-			fmt.Println(count)
-			runtime.GC()
-		}
 		current = fringe.Remove(fringe.Front()).(board)
 
 	}
