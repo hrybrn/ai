@@ -6,7 +6,7 @@ import (
 	"runtime"
 )
 
-func breadthFirst(start, solution board) {
+func breadthFirst(start, solution board) int {
 	fringe := list.New()
 	fringe.PushFront(start)
 
@@ -33,6 +33,5 @@ func breadthFirst(start, solution board) {
 
 	}
 
-	fmt.Println(count)
-	current.printParents()
+	return count
 }

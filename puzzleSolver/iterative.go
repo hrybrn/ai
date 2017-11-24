@@ -2,20 +2,35 @@ package main
 
 import (
 	"container/list"
-	"fmt"
 )
 
-func iterativeDeepening(start, solution board) {
+func iterativeDeepening(start, solution board) int {
+
+	startingDepth := 1.0
+
+	count, found := iterative(start, solution, startingDepth)
+
+	for !found {
+		startingDepth++
+		currentCount, currentFound := iterative(start, solution, startingDepth)
+
+		count += currentCount
+		found = currentFound
+	}
+
+	return count
+}
+
+func iterative(start, solution board, depthLimit float64) (int, bool) {
 	fringe := list.New()
 	fringe.PushFront(start)
 
 	count := 0
 
-	depthLimit := 2.0
+	current := start
 
-	current := fringe.Remove(fringe.Front()).(board)
-
-	for !current.equals(solution) {
+	for fringe.Len() > 0 && !current.equals(solution) {
+		current = fringe.Remove(fringe.Front()).(board)
 		count++
 
 		depth := current.numberParents() + 1
@@ -29,26 +44,10 @@ func iterativeDeepening(start, solution board) {
 				fringe.PushFront(next)
 			}
 
-		} else {
-			for i := 0; moves.Len() > 0; i++ {
-				next := moves.Remove(moves.Front()).(board)
-
-				fringe.PushBack(next)
-			}
 		}
 
-		if depth == depthLimit + 1 {
-			depthLimit += 3
-			fmt.Println(depthLimit)
-		}
-
-		if count%10000000 == 0 {
-			fmt.Println(count)
-		}
-		current = fringe.Remove(fringe.Front()).(board)
-
+		//current.printParents()
 	}
 
-	fmt.Println(count)
-	current.printParents()
+	return count, (current.equals(solution))
 }
