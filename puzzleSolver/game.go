@@ -18,6 +18,39 @@ func main() {
 
 		fmt.Println(strconv.Itoa(16-i) + "," + strconv.Itoa(nodesExpanded))
 	}
+	
+	fmt.Println()
+	fmt.Println()
+	
+	for i := 15; i >= 0; i-- {
+		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
+
+		nodesExpanded := depthFirst(start, solution)
+
+		fmt.Println(strconv.Itoa(16-i) + "," + strconv.Itoa(nodesExpanded))
+	}
+	
+	fmt.Println()
+	fmt.Println()
+	
+	for i := 15; i >= 0; i-- {
+		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
+
+		nodesExpanded := astar(start, solution)
+
+		fmt.Println(strconv.Itoa(16-i) + "," + strconv.Itoa(nodesExpanded))
+	}
+	
+	fmt.Println()
+	fmt.Println()
+	
+	for i := 15; i >= 0; i-- {
+		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
+
+		nodesExpanded := iterativeDeepening(start, solution)
+
+		fmt.Println(strconv.Itoa(16-i) + "," + strconv.Itoa(nodesExpanded))
+	}
 
 	//breadthFirst(start, solution)
 	//depthFirst(start, solution)
