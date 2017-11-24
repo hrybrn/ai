@@ -8,7 +8,7 @@ import (
 )
 
 type point struct {
-	x, y int
+	x, y, xLimit, yLimit int
 }
 
 func (p point) equals(other point) bool {
@@ -16,7 +16,7 @@ func (p point) equals(other point) bool {
 }
 
 func (p point) valid() bool {
-	return p.x >= 0 && p.y >= 0 && p.x <= 3 && p.y <= 3
+	return p.x >= 0 && p.y >= 0 && p.x <= p.xLimit && p.y <= p.yLimit
 }
 
 func (p point) manhattanDistance(other point) float64 {
@@ -40,10 +40,10 @@ func (b board) moves() *list.List {
 	moves := list.New()
 
 	points := make([]point, 4)
-	points[0] = point{b.agent.x - 1, b.agent.y}
-	points[1] = point{b.agent.x + 1, b.agent.y}
-	points[2] = point{b.agent.x, b.agent.y - 1}
-	points[3] = point{b.agent.x, b.agent.y + 1}
+	points[0] = point{b.agent.x - 1, b.agent.y, b.agent.xLimit, b.agent.yLimit}
+	points[1] = point{b.agent.x + 1, b.agent.y, b.agent.xLimit, b.agent.yLimit}
+	points[2] = point{b.agent.x, b.agent.y - 1, b.agent.xLimit, b.agent.yLimit}
+	points[3] = point{b.agent.x, b.agent.y + 1, b.agent.xLimit, b.agent.yLimit}
 
 	for i := 0; i < 4; i++ {
 		if points[i].valid() {
@@ -75,12 +75,15 @@ func (b board) printParents() {
 	count := 0
 
 	for current != nil {
-		output := [4][4]string{
-			{" ", " ", " ", " "},
-			{" ", " ", " ", " "},
-			{" ", " ", " ", " "},
-			{" ", " ", " ", " "}}
-
+		output := make([][]string, b.agent.xLimit+1)
+		for i := 0; i <= b.agent.xLimit; i++ {
+			output[i] = make([]string, b.agent.yLimit+1)
+		}
+		for i := 0; i <= b.agent.xLimit; i++ {
+			for j := 0; j <= b.agent.yLimit; j++ {
+				output[i][j] = " "
+			}
+		}
 		output[current.a.x][current.a.y] = "a"
 		output[current.b.x][current.b.y] = "b"
 		output[current.c.x][current.c.y] = "c"
@@ -88,9 +91,9 @@ func (b board) printParents() {
 
 		stringOutput := ""
 
-		for i := 0; i < 4; i++ {
-			for j := 0; j < 4; j++ {
-				stringOutput += output[j][3-i] + " "
+		for i := 0; i <= b.agent.xLimit; i++ {
+			for j := 0; j <= b.agent.yLimit; j++ {
+				stringOutput += output[i][j] + " "
 			}
 
 			stringOutput += "\n"

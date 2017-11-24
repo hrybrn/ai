@@ -4,7 +4,7 @@ import (
 	priorityQueue "github.com/jupp0r/go-priority-queue"
 )
 
-func astar(start, solution board) {
+func astar(start, solution board) int {
 	fringe := priorityQueue.New()
 
 	startMD := start.manhattanDistance(solution)
@@ -14,9 +14,11 @@ func astar(start, solution board) {
 	inter, err := fringe.Pop()
 
 	current := inter.(board)
+	count := 0
 
 	if err == nil {
 		for !current.equals(solution) {
+			count++
 
 			moves := current.moves()
 
@@ -35,7 +37,8 @@ func astar(start, solution board) {
 				current = inter.(board)
 			}
 		}
-
-		current.printParents()
+		return count
+		//current.printParents()
 	}
+	return 0
 }

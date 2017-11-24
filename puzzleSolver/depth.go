@@ -2,41 +2,33 @@ package main
 
 import (
 	"container/list"
-	"fmt"
+	"math/rand"
 
 	shuffle "github.com/shogo82148/go-shuffle"
 )
 
-func depthFirst(start, solution board) {
-	fringe := list.New()
-	fringe.PushFront(start)
-
+func depthFirst(start, solution board) int {
 	count := 0
 
-	current := fringe.Remove(fringe.Front()).(board)
+	current := start
 
 	for !current.equals(solution) {
 		count++
 
 		moves := current.moves()
 
-		*moves = shuffleList(moves)
+		index := rand.Intn(moves.Len())
 
-		for i := 0; moves.Len() > 0; i++ {
-			next := moves.Remove(moves.Front())
-			fringe.PushFront(next)
-			//fmt.Println(count, next.agent.x, next.agent.y)
+		for index > 0 {
+			moves.Remove(moves.Front())
+			index--
 		}
 
-		if count%1000000 == 0 {
-			fmt.Println(count)
-		}
-
-		current = fringe.Remove(fringe.Front()).(board)
+		current = moves.Front().Value.(board)
 	}
 
-	fmt.Println(count)
-	current.printParents()
+	return count
+	//current.printParents()
 }
 
 func shuffleList(input *list.List) list.List {
