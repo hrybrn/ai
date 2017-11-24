@@ -38,7 +38,7 @@ func iterativeDeepening(start, solution board) {
 		}
 
 		if depth == depthLimit + 1 {
-			depthLimit += 5
+			depthLimit += 3
 			fmt.Println(depthLimit)
 		}
 
