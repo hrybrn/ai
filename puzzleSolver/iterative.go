@@ -4,27 +4,32 @@ import (
 	"container/list"
 )
 
-func iterativeDeepening(start, solution board) int {
+func iterativeDeepening(start, solution board) (int, int) {
 
 	startingDepth := 1.0
 
-	count, found := iterative(start, solution, startingDepth)
+	count, largest, found := iterative(start, solution, startingDepth)
 
 	for !found {
 		startingDepth++
-		currentCount, currentFound := iterative(start, solution, startingDepth)
+		currentCount, currentLargest, currentFound := iterative(start, solution, startingDepth)
 
 		count += currentCount
 		found = currentFound
+
+		if largest < currentLargest {
+			largest = currentLargest
+		}
 	}
 
-	return count
+	return count, largest
 }
 
-func iterative(start, solution board, depthLimit float64) (int, bool) {
+func iterative(start, solution board, depthLimit float64) (int, int, bool) {
 	fringe := list.New()
 	fringe.PushFront(start)
 
+	largest := 1
 	count := 0
 
 	current := start
@@ -46,8 +51,12 @@ func iterative(start, solution board, depthLimit float64) (int, bool) {
 
 		}
 
+		if largest < fringe.Len() {
+			largest = fringe.Len()
+		}
+
 		//current.printParents()
 	}
 
-	return count, (current.equals(solution))
+	return count, largest, (current.equals(solution))
 }

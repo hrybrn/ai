@@ -14,9 +14,9 @@ func main() {
 	for i := 15; i >= 0; i-- {
 		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
 
-		nodesExpanded := breadthFirst(start, solution)
+		nodesExpanded, queueAtLargest := breadthFirst(start, solution)
 
-		fmt.Println(strconv.Itoa(16-i) + "," + strconv.Itoa(nodesExpanded))
+		fmt.Println(strconv.Itoa(16-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
 	}
 
 	//breadthFirst(start, solution)

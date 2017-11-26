@@ -1,13 +1,10 @@
 package main
 
 import (
-	"container/list"
 	"math/rand"
-
-	shuffle "github.com/shogo82148/go-shuffle"
 )
 
-func depthFirst(start, solution board) int {
+func depthFirst(start, solution board) (int, int) {
 	count := 0
 
 	current := start
@@ -27,26 +24,5 @@ func depthFirst(start, solution board) int {
 		current = moves.Front().Value.(board)
 	}
 
-	return count
-	//current.printParents()
-}
-
-func shuffleList(input *list.List) list.List {
-	size := input.Len()
-	intermediate := make([]board, size)
-
-	for i := 0; i < size; i++ {
-		current := input.Front()
-		input.Remove(current)
-		intermediate[i] = current.Value.(board)
-	}
-
-	slice := intermediate[0:len(intermediate)]
-	shuffle.Slice(slice)
-
-	for i := 0; i < size; i++ {
-		input.PushFront(slice[i])
-	}
-
-	return *input
+	return count, 1
 }

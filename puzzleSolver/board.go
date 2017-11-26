@@ -124,3 +124,13 @@ func (b board) numberParents() float64 {
 
 	return count
 }
+
+func (b board) explored(bs []board) bool {
+	for _, element := range bs {
+		if b.equals(element) {
+			return true
+		}
+	}
+
+	return false
+}
