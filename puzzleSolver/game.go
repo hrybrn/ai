@@ -14,7 +14,7 @@ func main() {
 	for i := 15; i >= 0; i-- {
 		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
 
-		nodesExpanded, queueAtLargest := breadthFirst(start, solution)
+		nodesExpanded, queueAtLargest := iterativeDeepening(start, solution)
 
 		fmt.Println(strconv.Itoa(16-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
 	}
