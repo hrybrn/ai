@@ -43,7 +43,7 @@ func astar(start, solution board) (int, int) {
 				current = inter.(board)
 			}
 		}
-		current.printParents()
+		//current.printParents()
 		return count, largest
 	}
 	return 0, 0
