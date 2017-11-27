@@ -11,36 +11,36 @@ import (
 func main() {
 	solution := loadFromFile("difficulty/solution.txt")
 
-	for i := 15; i >= 0; i-- {
+	for i := 13; i >= 0; i-- {
 		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
 
 		nodesExpanded, queueAtLargest := astar(start, solution)
 
-		fmt.Println(strconv.Itoa(16-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
+		fmt.Println(strconv.Itoa(13-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
 	}
 
-	for i := 15; i >= 0; i-- {
+	for i := 13; i >= 0; i-- {
 		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
 
 		nodesExpanded, queueAtLargest := depthFirst(start, solution)
 
-		fmt.Println(strconv.Itoa(16-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
+		fmt.Println(strconv.Itoa(13-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
 	}
 
-	for i := 15; i >= 0; i-- {
+	for i := 13; i >= 0; i-- {
 		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
 
 		nodesExpanded, queueAtLargest := breadthFirst(start, solution)
 
-		fmt.Println(strconv.Itoa(16-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
+		fmt.Println(strconv.Itoa(13-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
 	}
 
-	for i := 15; i >= 0; i-- {
+	for i := 13; i >= 0; i-- {
 		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
 
 		nodesExpanded, queueAtLargest := iterativeDeepening(start, solution)
 
-		fmt.Println(strconv.Itoa(16-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
+		fmt.Println(strconv.Itoa(13-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
 	}
 
 	//start := loadFromFile("difficulty/0.txt")
