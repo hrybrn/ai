@@ -29,11 +29,11 @@ type board struct {
 }
 
 func (b board) equals(other board) bool {
-	return b.a.equals(other.a) && b.b.equals(other.b) && b.c.equals(other.c) && b.agent.equals(other.agent)
+	return b.a.equals(other.a) && b.b.equals(other.b) && b.c.equals(other.c) //&& b.agent.equals(other.agent)
 }
 
 func (b board) manhattanDistance(other board) float64 {
-	return b.a.manhattanDistance(other.a) + b.b.manhattanDistance(other.b) + b.c.manhattanDistance(other.c) + b.agent.manhattanDistance(other.agent)
+	return b.a.manhattanDistance(other.a) + b.b.manhattanDistance(other.b) + b.c.manhattanDistance(other.c) //+ b.agent.manhattanDistance(other.agent)
 }
 
 func (b board) moves() *list.List {
@@ -67,6 +67,35 @@ func (b board) moves() *list.List {
 	return moves
 }
 
+func (b board) print() string {
+	output := make([][]string, b.agent.xLimit+1)
+	for i := 0; i <= b.agent.xLimit; i++ {
+		output[i] = make([]string, b.agent.yLimit+1)
+	}
+	for i := 0; i <= b.agent.xLimit; i++ {
+		for j := 0; j <= b.agent.yLimit; j++ {
+			output[i][j] = " "
+		}
+	}
+	output[b.a.x][b.a.y] = "a"
+	output[b.b.x][b.b.y] = "b"
+	output[b.c.x][b.c.y] = "c"
+	output[b.agent.x][b.agent.y] = "d"
+
+	stringOutput := "|--------|\n"
+
+	for i := 0; i <= b.agent.xLimit; i++ {
+		stringOutput += "|"
+		for j := 0; j <= b.agent.yLimit; j++ {
+			stringOutput += output[i][j] + " "
+		}
+
+		stringOutput += "|\n"
+	}
+
+	return stringOutput + "|--------|\n"
+}
+
 func (b board) printParents() {
 	current := &b
 
@@ -75,31 +104,7 @@ func (b board) printParents() {
 	count := 0
 
 	for current != nil {
-		output := make([][]string, b.agent.xLimit+1)
-		for i := 0; i <= b.agent.xLimit; i++ {
-			output[i] = make([]string, b.agent.yLimit+1)
-		}
-		for i := 0; i <= b.agent.xLimit; i++ {
-			for j := 0; j <= b.agent.yLimit; j++ {
-				output[i][j] = " "
-			}
-		}
-		output[current.a.x][current.a.y] = "a"
-		output[current.b.x][current.b.y] = "b"
-		output[current.c.x][current.c.y] = "c"
-		output[current.agent.x][current.agent.y] = "d"
-
-		stringOutput := ""
-
-		for i := 0; i <= b.agent.xLimit; i++ {
-			for j := 0; j <= b.agent.yLimit; j++ {
-				stringOutput += output[i][j] + " "
-			}
-
-			stringOutput += "\n"
-		}
-
-		fullOutput.PushBack(stringOutput)
+		fullOutput.PushBack(current.print())
 		current = current.parent
 	}
 
@@ -109,7 +114,6 @@ func (b board) printParents() {
 		count++
 		fmt.Println(orderedOut)
 	}
-
 }
 
 func (b board) numberParents() float64 {

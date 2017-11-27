@@ -36,13 +36,14 @@ func iterative(start, solution board, depthLimit float64) (int, int, bool) {
 
 	for fringe.Len() > 0 && !current.equals(solution) {
 		current = fringe.Remove(fringe.Front()).(board)
-		count++
 
 		depth := current.numberParents() + 1
 
 		moves := current.moves()
 
 		if depth < depthLimit {
+			count++
+
 			for i := 0; moves.Len() > 0; i++ {
 				next := moves.Remove(moves.Front()).(board)
 
