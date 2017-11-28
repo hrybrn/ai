@@ -29,11 +29,19 @@ type board struct {
 }
 
 func (b board) equals(other board) bool {
-	return b.a.equals(other.a) && b.b.equals(other.b) && b.c.equals(other.c) //&& b.agent.equals(other.agent)
+	return b.a.equals(other.a) && b.b.equals(other.b) && b.c.equals(other.c)
+}
+
+func (b board) equalsWithAgent(other board) bool {
+	return b.equals(other) && b.agent.equals(other.agent)
 }
 
 func (b board) manhattanDistance(other board) float64 {
-	return b.a.manhattanDistance(other.a) + b.b.manhattanDistance(other.b) + b.c.manhattanDistance(other.c) //+ b.agent.manhattanDistance(other.agent)
+	return b.a.manhattanDistance(other.a) + b.b.manhattanDistance(other.b) + b.c.manhattanDistance(other.c)
+}
+
+func (b board) manhattanDistanceWithAgent(other board) float64 {
+	return b.manhattanDistance(other) + b.agent.manhattanDistance(other.agent)
 }
 
 func (b board) moves() *list.List {
@@ -130,8 +138,8 @@ func (b board) numberParents() float64 {
 }
 
 func (b board) explored(bs []board) bool {
-	for _, element := range bs {
-		if b.equals(element) {
+	for _, board := range bs {
+		if board.equalsWithAgent(b) {
 			return true
 		}
 	}

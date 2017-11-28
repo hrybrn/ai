@@ -80,8 +80,8 @@ func astarGraph(start, solution board) (int, int) {
 			}
 			explored = append(explored, current)
 
-			if largest < fringe.Len() {
-				largest = fringe.Len()
+			if largest < (fringe.Len() + len(explored)) {
+				largest = fringe.Len() + len(explored)
 			}
 
 			for current.explored(explored) {

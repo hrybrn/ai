@@ -14,31 +14,37 @@ func main() {
 	for i := 13; i >= 0; i-- {
 		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
 
-		nodesExpanded, queueAtLargest := astar(start, solution)
-
-		fmt.Println(strconv.Itoa(13-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
-	}
-
-	for i := 13; i >= 0; i-- {
-		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
-
-		nodesExpanded, queueAtLargest := depthFirst(start, solution)
-
-		fmt.Println(strconv.Itoa(13-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
-	}
-
-	for i := 13; i >= 0; i-- {
-		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
-
 		nodesExpanded, queueAtLargest := breadthFirst(start, solution)
 
 		fmt.Println(strconv.Itoa(13-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
 	}
 
+	fmt.Println()
+
 	for i := 13; i >= 0; i-- {
 		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
 
-		nodesExpanded, queueAtLargest := iterativeDeepening(start, solution)
+		nodesExpanded, queueAtLargest := breadthFirstGraph(start, solution)
+
+		fmt.Println(strconv.Itoa(13-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
+	}
+
+	fmt.Println()
+
+	for i := 13; i >= 0; i-- {
+		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
+
+		nodesExpanded, queueAtLargest := astar(start, solution)
+
+		fmt.Println(strconv.Itoa(13-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
+	}
+
+	fmt.Println()
+
+	for i := 13; i >= 0; i-- {
+		start := loadFromFile("difficulty/" + strconv.Itoa(i) + ".txt")
+
+		nodesExpanded, queueAtLargest := astarGraph(start, solution)
 
 		fmt.Println(strconv.Itoa(13-i) + "," + strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
 	}
@@ -48,6 +54,11 @@ func main() {
 	//_, _ = depthFirst(start, solution)
 	//_, _ = astar(start, solution)
 	//_, _ = iterativeDeepening(start, solution)
+
+	//nodesExpanded, queueAtLargest := breadthFirstGraph(start, solution)
+	//fmt.Println(strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
+	//nodesExpanded, queueAtLargest = astarGraph(start, solution)
+	//fmt.Println(strconv.Itoa(nodesExpanded) + "," + strconv.Itoa(queueAtLargest))
 }
 
 func loadFromFile(fileName string) board {

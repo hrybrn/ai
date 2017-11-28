@@ -44,28 +44,28 @@ func breadthFirstGraph(start, solution board) (int, int) {
 	largest := 1
 	count := 0
 
-	current := fringe.Remove(fringe.Front()).(board)
+	current := start
 
 	for !current.equals(solution) {
 		count++
+
+		explored = append(explored, current)
 
 		moves := current.moves()
 
 		for i := 0; moves.Len() > 0; i++ {
 			next := moves.Remove(moves.Front()).(board)
 
-			fringe.PushBack(next)
+			if !next.explored(explored) {
+				fringe.PushBack(next)
+			}
 		}
 
-		if largest < fringe.Len() {
-			largest = fringe.Len()
+		if largest < (fringe.Len() + len(explored)) {
+			largest = fringe.Len() + len(explored)
 		}
 
-		explored = append(explored, current)
-
-		for current.explored(explored) {
-			current = fringe.Remove(fringe.Front()).(board)
-		}
+		current = fringe.Remove(fringe.Front()).(board)
 	}
 
 	return count, largest
